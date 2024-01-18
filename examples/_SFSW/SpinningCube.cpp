@@ -40,19 +40,12 @@ void SpinningCube::initPhysics()
 	boxTransform.setOrigin(btVector3(1, 1, 1));
 	btScalar mass(1);
 	btRigidBody *boxBody = createRigidBody(mass, boxTransform, boxShape, btVector4(0, 0, 1, 1));
-
-	auto *anchorShape = new btSphereShape(0.1);
-	btTransform anchorTransform;
-	anchorTransform.setIdentity();
-	anchorTransform.setOrigin(btVector3(0, 0, 0));
-	btScalar anchorMass(0);
-	btRigidBody *anchorBody = createRigidBody(anchorMass, anchorTransform, anchorShape, btVector4(1, 0, 0, 1));
+	boxBody->setAngularVelocity(10 * btVector3(1, 1, 1));
 
 	btTransform boxAnchorTransform;
 	boxAnchorTransform.setIdentity();
 	boxAnchorTransform.setOrigin(btVector3(-1, -1, -1));
-	// auto *pivot = new btConeTwistConstraint(*boxBody, *anchorBody, boxAnchorTransform, btTransform::getIdentity());
-	auto *pivot = new btPoint2PointConstraint(*boxBody, *anchorBody, btVector3(-1, -1, -1), btVector3(0, 0, 0));
+    auto *pivot = new btConeTwistConstraint(*boxBody, boxAnchorTransform);
 	pivot->setDbgDrawSize(2);
 	m_dynamicsWorld->addConstraint(pivot);
 
