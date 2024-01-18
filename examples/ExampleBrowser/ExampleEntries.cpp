@@ -84,7 +84,8 @@
 #include "../ReducedDeformableDemo/ReducedBenchmark.h"
 #include "../InverseKinematics/InverseKinematicsExample.h"
 
-#include "../_SFSW/SFSWDemo.h"
+#include "../_SFSW/MultiBody.h"
+#include "../_SFSW/SpinningCube.h"
 
 #ifdef B3_ENABLE_TINY_AUDIO
 #include "../TinyAudio/TinyAudioExample.h"
@@ -138,7 +139,8 @@ struct ExampleEntry
 static ExampleEntry gDefaultExamples[] =
 	{
 		ExampleEntry(0, "SFSW"),
-		ExampleEntry(1, "Multi body", "Multi body", SFSWCreateFunc),
+		ExampleEntry(1, "Multi body", "Multi body", MultiBodyCreateFunc),
+		ExampleEntry(1, "Spinning cube", "Spinning cube", SpinningCubeCreateFunc),
 
 		ExampleEntry(0, "API"),
 

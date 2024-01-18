@@ -1,13 +1,13 @@
-#include "SFSWDemo.h"
+#include "MultiBody.h"
 
 #include "btBulletDynamicsCommon.h"
 #include "LinearMath/btVector3.h"
 
 #include "../CommonInterfaces/CommonRigidBodyBase.h"
 
-struct SFSW : public CommonRigidBodyBase {
-    SFSW(struct GUIHelperInterface* helper) : CommonRigidBodyBase(helper) {}
-    virtual ~SFSW() {}
+struct MultiBody : public CommonRigidBodyBase {
+    MultiBody(struct GUIHelperInterface* helper) : CommonRigidBodyBase(helper) {}
+    virtual ~MultiBody() {}
     virtual void initPhysics();
     virtual void renderScene();
     void resetCamera() {
@@ -19,7 +19,7 @@ struct SFSW : public CommonRigidBodyBase {
     }
 };
 
-void SFSW::initPhysics() {
+void MultiBody::initPhysics() {
     m_guiHelper->setUpAxis(1);
 
     createEmptyDynamicsWorld();
@@ -120,10 +120,10 @@ void SFSW::initPhysics() {
     m_guiHelper->autogenerateGraphicsObjects(m_dynamicsWorld);
 }
 
-void SFSW::renderScene() {
+void MultiBody::renderScene() {
     CommonRigidBodyBase::renderScene();
 }
 
-CommonExampleInterface* SFSWCreateFunc(CommonExampleOptions& options) {
-    return new SFSW(options.m_guiHelper);
+CommonExampleInterface* MultiBodyCreateFunc(CommonExampleOptions& options) {
+    return new MultiBody(options.m_guiHelper);
 }

@@ -408,8 +408,10 @@ SET(BulletExampleBrowser_SRCS
 	../ReducedDeformableDemo/ReducedBenchmark.h
 	../ReducedDeformableDemo/ReducedMotorGrasp.cpp
 	../ReducedDeformableDemo/ReducedMotorGrasp.h
-  ../_SFSW/SFSWDemo.cpp
-  ../_SFSW/SFSWDemo.h
+  ../_SFSW/MultiBody.cpp
+  ../_SFSW/MultiBody.h
+  ../_SFSW/SpinningCube.cpp
+  ../_SFSW/SpinningCube.h
   ../Constraints/TestHingeTorque.cpp
   ../Constraints/TestHingeTorque.h
   ../Constraints/ConstraintDemo.cpp
