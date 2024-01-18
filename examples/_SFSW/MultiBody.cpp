@@ -92,6 +92,28 @@ void MultiBody::initPhysics()
 		bodies.push_back(createRigidBody(mass, legTransform, legShape, btVector4(1, 1, 1, 1)));
 	}
 
+	constexpr auto sphereCount = 15;
+	auto *sphereShape = new btSphereShape(btScalar(0.5));
+	auto *linkShape = createBoxShape(btVector3(0.5, 0.1, 0.1));
+	m_collisionShapes.push_back(sphereShape);
+	m_collisionShapes.push_back(linkShape);
+	btTransform sphereTransform;
+	btTransform linkTransform;
+	sphereTransform.setIdentity();
+	linkTransform.setIdentity();
+	for (int i = 0; i < sphereCount; i++)
+	{
+		auto sphereAngle = btScalar(i) * 2 * SIMD_PI / sphereCount;
+		auto linkAngle = btScalar(i) * 2 * SIMD_PI / sphereCount + SIMD_PI / sphereCount;
+		btScalar mass(1);
+		sphereTransform.setOrigin(btVector3(4 * sin(sphereAngle), 25, 4 * cos(sphereAngle)));
+		sphereTransform.setRotation(btQuaternion(btVector3(0, 1, 0), sphereAngle));
+		linkTransform.setOrigin(btVector3(4 * sin(linkAngle), 25, 4 * cos(linkAngle)));
+		linkTransform.setRotation(btQuaternion(btVector3(0, 1, 0), linkAngle));
+		bodies.push_back(createRigidBody(mass, sphereTransform, sphereShape, btVector4(1, 1, 1, 1)));
+		bodies.push_back(createRigidBody(mass, linkTransform, linkShape, btVector4(1, 1, 1, 1)));
+	}
+
 	auto *headTorso = new btPoint2PointConstraint(*bodies[0], *bodies[1], btVector3(0, -1, 0), btVector3(0, 3, 0));
 	m_dynamicsWorld->addConstraint(headTorso);
 
@@ -125,6 +147,14 @@ void MultiBody::initPhysics()
 	{
 		auto *legLeg = new btPoint2PointConstraint(*bodies[23 + i * 2], *bodies[23 + i * 2 + 2], btVector3(0, -0.2, 0), btVector3(0, 0.2, 0));
 		m_dynamicsWorld->addConstraint(legLeg);
+	}
+
+	for (int i = 0; i < sphereCount * 2; i++)
+	{
+		auto *body1 = bodies[42 + i];
+		auto *body2 = bodies[42 + (i + 1) % (sphereCount * 2)];
+		auto *joint = new btPoint2PointConstraint(*body1, *body2, btVector3(0.5, 0, 0), btVector3(-0.5, 0, 0));
+		m_dynamicsWorld->addConstraint(joint);
 	}
 
 	m_guiHelper->autogenerateGraphicsObjects(m_dynamicsWorld);
