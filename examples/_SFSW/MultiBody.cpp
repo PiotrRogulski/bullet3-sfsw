@@ -16,7 +16,7 @@ struct MultiBody : public CommonRigidBodyBase
 		float dist = 20;
 		float pitch = -35;
 		float yaw = 52;
-		float targetPos[3] = {0, 10, 0};
+		float targetPos[3] = {0, 12, 0};
 		m_guiHelper->resetCamera(dist, yaw, pitch, targetPos[0], targetPos[1], targetPos[2]);
 	}
 };
@@ -92,7 +92,7 @@ void MultiBody::initPhysics()
 		bodies.push_back(createRigidBody(mass, legTransform, legShape, btVector4(1, 1, 1, 1)));
 	}
 
-	constexpr auto sphereCount = 15;
+	constexpr auto sphereCount = 25;
 	auto *sphereShape = new btSphereShape(btScalar(0.5));
 	auto *linkShape = createBoxShape(btVector3(0.5, 0.1, 0.1));
 	m_collisionShapes.push_back(sphereShape);
