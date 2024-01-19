@@ -13,9 +13,9 @@ struct SpinningCube : public CommonRigidBodyBase
 	void renderScene() override;
 	void resetCamera() override
 	{
-		float dist = 5;
+		float dist = 6;
 		float pitch = -35;
-		float yaw = 52;
+		float yaw = -38;
 		float targetPos[3] = {0, 0, 0};
 		m_guiHelper->resetCamera(dist, yaw, pitch, targetPos[0], targetPos[1], targetPos[2]);
 	}
@@ -40,12 +40,12 @@ void SpinningCube::initPhysics()
 	boxTransform.setOrigin(btVector3(1, 1, 1));
 	btScalar mass(1);
 	btRigidBody *boxBody = createRigidBody(mass, boxTransform, boxShape, btVector4(0, 0, 1, 1));
-	boxBody->setAngularVelocity(10 * btVector3(1, 1, 1));
+	boxBody->setAngularVelocity(20 * btVector3(1, 1, 1));
 
 	btTransform boxAnchorTransform;
 	boxAnchorTransform.setIdentity();
 	boxAnchorTransform.setOrigin(btVector3(-1, -1, -1));
-    auto *pivot = new btConeTwistConstraint(*boxBody, boxAnchorTransform);
+	auto *pivot = new btConeTwistConstraint(*boxBody, boxAnchorTransform);
 	pivot->setDbgDrawSize(2);
 	m_dynamicsWorld->addConstraint(pivot);
 
